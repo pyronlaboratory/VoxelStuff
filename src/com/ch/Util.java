@@ -9,81 +9,87 @@ import java.util.ArrayList;
 import org.lwjgl.BufferUtils;
 
 /**
- * is a collection of utility methods for working with various data types, including
- * integers, floats, bytes, and matrices. The class provides methods for creating
- * buffers from these data types, flipping buffers, and removing empty strings. It
- * also offers methods for converting integer arrays to int arrays, floating arrays
- * to float arrays, and matrix4f values to floating point buffers.
+ * provides several methods for manipulating arrays of data, including buffer creation
+ * and flipping, array removal, and type casting. It also includes a method for
+ * creating a matrix from a float buffer.
  */
 public class Util {
 	
  /**
-  * creates a new float buffer with the specified size using the `BufferUtils` class.
+  * creates a new `FloatBuffer` object with the specified size.
   * 
-  * @param size number of float values to be stored in the resulting FloatBuffer.
+  * @param size number of elements to be stored in the `FloatBuffer`.
   * 
-  * @returns a `FloatBuffer` object with the specified size.
+  * @returns a `FloatBuffer` object of size `size`.
   * 
-  * The function returns a `FloatBuffer`.
-  * A `FloatBuffer` is an object that provides direct access to a contiguous block of
-  * memory cells representing floating-point numbers without incurring a full copy of
-  * the data. It allows efficient manipulation and modification of the data in the buffer.
-  * It has a size attribute indicating the number of elements in the buffer.
+  * The output is a FloatBuffer object that represents a contiguous block of floating-point
+  * data in memory.
+  * The buffer has a specified size, which can be any positive integer value.
+  * The buffer's capacity is equal to its size, and it can hold at most this number
+  * of floats without reallocating memory.
+  * The buffer's position is 0 by default, indicating that the first float in the
+  * buffer is at position 0.
   */
 	public static FloatBuffer createFloatBuffer(int size) {
 		return BufferUtils.createFloatBuffer(size);
 	}
 
  /**
-  * creates an `IntBuffer` instance with the specified size using `BufferUtils`.
+  * creates an `IntBuffer` object with the specified size using `BufferUtils`.
   * 
-  * @param size integer capacity of the IntBuffer that will be created by the function.
+  * @param size number of elements to be stored in the IntBuffer.
   * 
-  * @returns an IntBuffer instance representing a buffer of integers with the specified
-  * size.
+  * @returns an IntBuffer object representing a contiguous block of integers with the
+  * specified size.
   * 
-  * The function returns an `IntBuffer` object, which is a view of a portion of memory
-  * that can be used to store and manipulate integer values.
-  * The `IntBuffer` object is created using the `BufferUtils` class, which provides a
-  * range of methods for manipulating buffers.
-  * The size parameter passed to the function determines the number of integers that
-  * can be stored in the buffer.
+  * The `IntBuffer` object created has a size property that represents the number of
+  * elements in the buffer.
+  * A capacity property that represents the maximum amount of memory that can be used
+  * by the buffer.
+  * Accessibility flags that indicate whether the buffer is read-only, write-only, or
+  * readable and writable.
+  * The buffer's position, which indicates where the next element can be found in the
+  * buffer.
   */
 	public static IntBuffer createIntBuffer(int size) {
 		return BufferUtils.createIntBuffer(size);
 	}
 
  /**
-  * creates a new `ByteBuffer` instance with a specified size. The returned buffer can
-  * be used for reading or writing binary data.
+  * creates a new `ByteBuffer` instance with a specified size. It uses the `BufferUtils`
+  * class to create the buffer, ensuring efficient memory management.
   * 
-  * @param size integer size of the ByteBuffer to be created, which determines the
-  * capacity of the buffer and its ability to hold data.
+  * @param size maximum capacity of the ByteBuffer to be created, which determines the
+  * amount of memory allocated for storage.
   * 
-  * @returns a non-null `ByteBuffer` object of the specified size.
+  * @returns a ByteBuffer object of the specified size.
   * 
-  * 	- The output is a `ByteBuffer` instance that can be used to store binary data.
-  * 	- The size of the buffer is determined by the `size` parameter passed into the function.
-  * 	- The buffer is created using the `BufferUtils` class, which provides utility
-  * methods for working with buffers in Java.
+  * The `createByteBuffer` function returns a `ByteBuffer` instance, which is a
+  * lightweight, direct-access view of a portion of memory.
+  * 
+  * The `ByteBuffer` instance has an initial capacity determined by the parameter
+  * `size`, and can be resized using the `put` method.
+  * 
+  * The `ByteBuffer` instance can be accessed and manipulated using various methods,
+  * such as `get`, `getInt`, `getLong`, and `put`.
   */
 	public static ByteBuffer createByteBuffer(int size) {
 		return BufferUtils.createByteBuffer(size);
 	}
 
  /**
-  * creates an `IntBuffer` object from an array of integers and flips it to create a
-  * view of the array in reverse order.
+  * creates an `IntBuffer` instance from a list of integers, puts them into the buffer,
+  * and flips it for efficient random access.
   * 
-  * @returns an flipped IntBuffer containing the input values.
+  * @returns an flipped `IntBuffer` containing the input `int` values.
   * 
-  * 	- The `IntBuffer` object that is returned represents a view of the underlying
-  * memory, where the low-order byte values of the input array are stored in successive
-  * memory locations.
-  * 	- The `flip()` method is called on the buffer after it has been created and
-  * populated with the input values, which reverses the endianness of the data.
-  * 	- The returned buffer is guaranteed to be a valid view of the input array for as
-  * long as the array is not modified or its elements are not reused.
+  * 	- The buffer is an `IntBuffer`, indicating that it stores integer values.
+  * 	- It is created by taking the input array `values` and creating an `IntBuffer`
+  * from it using the `createIntBuffer` method.
+  * 	- The `put` method is called on the buffer to write the input values to it, in
+  * the order they were provided in the input array.
+  * 	- After writing the values, the `flip` method is called on the buffer to flip it,
+  * making its contents available for reading as integer values.
   */
 	public static IntBuffer createFlippedBuffer(int... values) {
 		IntBuffer buffer = createIntBuffer(values.length);
@@ -94,14 +100,16 @@ public class Util {
 	}
 	
  /**
-  * creates a new `FloatBuffer` instance from an array of floating-point values and
-  * flips it to create a new view of the data.
+  * creates a new FloatBuffer object filled with the provided float values, then flips
+  * the buffer to create a mirrored copy of the original data.
   * 
-  * @returns a flipped FloatBuffer containing the provided values.
+  * @returns a flipped FloatBuffer containing the input values.
   * 
-  * 	- `FloatBuffer buffer`: The buffer that contains the flipped float values.
-  * 	- `values.length`: The number of float values stored in the buffer.
-  * 	- `put(values)`: The method used to store the float values in the buffer.
+  * 	- The `FloatBuffer` object returned is created with the specified length from the
+  * input `float... values`.
+  * 	- The `put` method is called on the buffer to store the input values.
+  * 	- The `flip()` method is called after storing the values to flip the buffer's
+  * position, effectively reversing its orientation for subsequent access.
   */
 	public static FloatBuffer createFlippedBuffer(float... values) {
 		FloatBuffer buffer = createFloatBuffer(values.length);
@@ -162,18 +170,23 @@ public class Util {
 	}
 */
  /**
-  * filters a given array of strings, retaining only those that are not empty. The
-  * resulting array is returned as a new String array.
+  * removes all empty strings from an array of strings, returning a new array of
+  * non-empty strings.
   * 
-  * @param data 0-length array of strings that the function operates on and whose
-  * non-empty elements are collected and returned in the output array.
+  * @param data 0 or more string arrays to be processed and returned as a new array
+  * of non-empty strings.
   * 
-  * 	- `data` is an array of strings.
-  * 	- It has a fixed length of `data.length`.
-  * 	- Each element in the array is a string.
-  * 	- The strings may contain any valid characters according to the Java character set.
+  * 	- The array `data` is passed as an argument to the function, indicating that it
+  * is a collection of strings.
+  * 	- The length of the array `data` is specified using the variable `i`, which ranges
+  * from 0 to `data.length - 1`.
+  * 	- Each element in the array `data` is checked for emptiness using the method
+  * `equals()`. If an element is empty, it is not included in the result.
+  * 	- The resulting array `res` is created by calling the `toArray()` method on the
+  * list of non-empty strings generated by the loop.
   * 
-  * @returns an array of non-empty strings.
+  * @returns an array of non-empty strings obtained by iterating over the input array
+  * and adding each non-empty string to a list.
   */
 	public static String[] removeEmptyStrings(String[] data) {
 		ArrayList<String> result = new ArrayList<String>();
@@ -189,21 +202,19 @@ public class Util {
 	}
 
  /**
-  * takes an `Integer` array as input and returns a new `int[]` array with the same elements.
+  * converts an array of integers to an integer array with the same length, by simply
+  * copying the elements of the original array.
   * 
-  * @param data array of integers that will be converted to an integer array using the
-  * `toIntArray()` method.
+  * @param data 1D array of integers that will be converted to an integer array through
+  * the method.
   * 
-  * 1/ The `Integer[] data` parameter is an array of integers that can be manipulated
-  * in this function.
-  * 2/ The function creates a new `int[] result` with the same length as the original
-  * `data`.
-  * 3/ The function loops through each element of the `data` array and assigns its
-  * value to the corresponding position in the `result` array.
-  * 4/ Finally, the function returns the `result` array, which contains the deserialized
-  * values from the input `data` array.
+  * 1/ The type of the array is specified as `Integer[]`.
+  * 2/ The length of the array is determined by the size of the `data` array.
+  * 3/ Each element in the `data` array is assigned to an equivalent integer value in
+  * the output `result` array, using the `=` operator.
   * 
-  * @returns an integer array containing the values of the input `Integer[]` array.
+  * @returns an integer array with the same length as the input `data` array, containing
+  * the corresponding integer values.
   */
 	public static int[] toIntArray(Integer[] data) {
 		int[] result = new int[data.length];
@@ -215,18 +226,20 @@ public class Util {
 	}
 	
  /**
-  * takes a list of integers and returns an integer array with the same size as the
-  * input list, containing the corresponding integers from the list.
+  * converts a list of integers to an integer array with the same size as the list.
+  * It uses a for loop to iterate over the list and copy each element into the resulting
+  * array.
   * 
-  * @param data List of integers that is converted to an integer array by the
+  * @param data list of integers that will be converted to an integer array by the
   * `toIntArray()` method.
   * 
-  * 	- `data` is a list of integers.
-  * 	- `data.size()` returns the number of elements in the list.
-  * 	- The `for` loop iterates over the elements of the list and assigns each element
-  * to its corresponding position in the resulting integer array.
+  * 	- `data`: This is a `List` object that contains a collection of `Integer` objects.
+  * 	- `size()`: This is an instance method of the `List` class that returns the number
+  * of elements in the list.
+  * 	- `get(int index)`: This is an instance method of the `List` class that returns
+  * the element at a specific position in the list.
   * 
-  * @returns an integer array containing the elements of the provided list.
+  * @returns an integer array of size equal to the number of elements in the input list.
   */
 	public static int[] toIntArray(List<Integer> data) {
 		int[] result = new int[data.size()];
@@ -238,18 +251,14 @@ public class Util {
 	}
 	
  /**
-  * converts a `Float` array into a `float` array, copying the values of the original
-  * array to the new array.
+  * takes a `Float[]` array as input and returns an equivalent `float[]` array with
+  * the same elements.
   * 
-  * @param data 1D array of `Float` values that will be converted into an array of
-  * `float` values.
+  * @param data Float array that contains the values to be converted into a float array.
   * 
-  * 	- `data`: An instance of the `Float` array class, representing an array of
-  * floating-point numbers.
-  * 	- `length`: A field of type `int`, indicating the number of elements in the `data`
-  * array.
+  * 	- `data` is an array of `Float`.
   * 
-  * @returns an array of floats containing the same values as the input `data` array.
+  * @returns an array of `float` values, with the same length as the input `data` array.
   */
 	public static float[] toFloatArray(Float[] data) {
 		float[] result = new float[data.length];
@@ -261,18 +270,15 @@ public class Util {
 	}
 	
  /**
-  * converts a given list of `Float` values into an array of `float` values, returning
-  * the converted array.
+  * takes a list of floating-point numbers and returns an array of the same size,
+  * containing each number from the input list.
   * 
-  * @param data list of floats that will be converted to an array of floats by the
-  * `toFloatArray()` method.
+  * @param data list of floating-point numbers that will be converted to an array of
+  * float values.
   * 
-  * 	- `List<Float>` represents a collection of floating-point numbers.
-  * 	- `data.size()` returns the number of elements in the list.
-  * 	- `data.get(i)` retrieves the `i`-th element from the list and assigns it to the
-  * corresponding position in the output array `result`.
+  * 	- `data`: A list containing floating-point numbers.
   * 
-  * @returns an array of `float` values containing the elements of the input `List<Float>`.
+  * @returns an array of `float` values, each corresponding to a value in the input list.
   */
 	public static float[] toFloatArray(List<Float> data) {
 		float[] result = new float[data.size()];
