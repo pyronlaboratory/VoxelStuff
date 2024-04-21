@@ -1,5 +1,12 @@
 package com.ch;
 
+/**
+ * in the provided code is responsible for generating noise using the Simplex Noise
+ * algorithm. The algorithm works by creating a grid of points in a multi-dimensional
+ * space and then interpolating between them to create a smooth noise pattern. The
+ * class provides methods for calculating the noise at different coordinates, as well
+ * as scaling the result to cover a specific range (-1, 1).
+ */
 public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 private static int grad3[][] = {{1,1,0},{-1,1,0},{1,-1,0},{-1,-1,0},
 	 {1,0,1},{-1,0,1},{1,0,-1},{-1,0,-1},
@@ -40,16 +47,95 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 {2,0,1,3},{0,0,0,0},{0,0,0,0},{0,0,0,0},{3,0,1,2},{3,0,2,1},{0,0,0,0},{3,1,2,0},
 	 {2,1,0,3},{0,0,0,0},{0,0,0,0},{0,0,0,0},{3,1,0,2},{0,0,0,0},{3,2,0,1},{3,2,1,0}};
 	 // This method is a *lot* faster than using (int)Math.floor(x)
+		/**
+		 * computes the nearest integer to a given double value, either rounding up or down
+		 * depending on the value's sign.
+		 * 
+		 * @param x double value to be rounded, which is used to determine the integer return
+		 * value between 0 and (inclusive) or between 0 and (exclusive).
+		 * 
+		 * @returns an integer value representing the nearest integer to the given double value.
+		 */
 	 private static int fastfloor(double x) {
 	 return x>0 ? (int)x : (int)x-1;
 	 }
+		/**
+		 * takes a two-dimensional array `g` and two scalar arguments `x` and `y`, returning
+		 * their dot product.
+		 * 
+		 * @param g 2D coordinates of a point in the Cartesian coordinate system, with the
+		 * first element of the array representing the x-coordinate and the second element
+		 * representing the y-coordinate.
+		 * 
+		 * @param x 0-based coordinate of a point in the two-dimensional space, where it is
+		 * multiplied by the corresponding element of the input array `g` to produce the dot
+		 * product value.
+		 * 
+		 * @param y 2nd element of the input array `g`.
+		 * 
+		 * @returns a double value computed as the product of two input arguments.
+		 */
 	 private static double dot(int g[], double x, double y) {
 	 return g[0]*x + g[1]*y; }
+		/**
+		 * takes four arguments: `g`, `x`, `y`, and `z`. It returns a double value calculated
+		 * by multiplying the elements of the `g` array with `x`, `y`, and `z`, respectively,
+		 * and then summing them.
+		 * 
+		 * @param g 3D coordinates of a point in the function's calculation of the dot product
+		 * between the 3D vector (represented by `x`, `y`, and `z`) and some other unknown
+		 * 3D vector.
+		 * 
+		 * @param x 0th element of an array of doubles, which is multiplied by the input value
+		 * before being combined with the inputs for the 1st and 2nd parameters to produce
+		 * the output value.
+		 * 
+		 * @param y second dimension of the array `g`, which is multiplied by the argument
+		 * `y` and added to the result of the multiplication of the first element of the array
+		 * with the argument `x`.
+		 * 
+		 * @param z 3rd dimension of the input array `g`, and is multiplied by the corresponding
+		 * element of the array when calculating the output value.
+		 * 
+		 * @returns a scalar value representing the dot product of the given vectors.
+		 */
 	 private static double dot(int g[], double x, double y, double z) {
 	 return g[0]*x + g[1]*y + g[2]*z; }
+		/**
+		 * computes the dot product of a given array of integers `g` with a set of scalars
+		 * `x`, `y`, `z`, and `w`. The function returns the result of the dot product computation.
+		 * 
+		 * @param g 4-dimensional coordinates of a point in space, with each element of the
+		 * array representing one dimension of the coordinate system.
+		 * 
+		 * @param x 0th element of the input array `g`.
+		 * 
+		 * @param y 2nd element of the input array `g`.
+		 * 
+		 * @param z 3rd dimension of the array `g`, and is multiplied by the value of `w`
+		 * before being combined with the other input parameters to produce the output result.
+		 * 
+		 * @param w 4th component of a point in 3D space, which is multiplied by the corresponding
+		 * value of the array `g` to produce the output result.
+		 * 
+		 * @returns a double value representing the dot product of the input vectors.
+		 */
 	 private static double dot(int g[], double x, double y, double z, double w) {
 	 return g[0]*x + g[1]*y + g[2]*z + g[3]*w; }
 	 // 2D simplex noise
+		/**
+		 * generates a noise value based on the input coordinates (x, y) and a simplex-based
+		 * hash function. The output is a scaled value between [-1, 1].
+		 * 
+		 * @param xin 2D coordinate of the point where the noise is being evaluated, and it
+		 * is used to calculate the hashed gradient indices for the three simplex corners.
+		 * 
+		 * @param yin 2D noise value for the y-coordinate of the pixel being processed, which
+		 * is used to compute the contribution from the middle simplex corner.
+		 * 
+		 * @returns a scaled noise value between [-1, 1], calculated based on the distances
+		 * from three simplex corners in Cartesian coordinates.
+		 */
 	 public static double noise(double xin, double yin) {
 	 double n0, n1, n2; // Noise contributions from the three corners
 	 // Skew the input space to determine which simplex cell we're in
@@ -105,6 +191,23 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 return 70.0 * (n0 + n1 + n2);
 	 }
 	 // 3D simplex noise
+		/**
+		 * generates a noise value based on four corner points in 3D space, using a Hashed
+		 * Gradient Index (HGI) approach to calculate the contribution from each corner. The
+		 * output is a scaled noise value within [-1,1].
+		 * 
+		 * @param xin 3D noise simulation's x-coordinate of the current position.
+		 * 
+		 * @param yin 3D noise generator's input value for the vertical dimension, which is
+		 * skewed and then used to determine the simplex cell it belongs to.
+		 * 
+		 * @param zin 3D coordinate of the current point in the noise simulation, which is
+		 * used to calculate the contributions from the four simplex corners and the final
+		 * noise value.
+		 * 
+		 * @returns a scalar value between -1 and 1, representing a noise value for a given
+		 * set of input coordinates.
+		 */
 	 public static double noise(double xin, double yin, double zin) {
 	 double n0, n1, n2, n3; // Noise contributions from the four corners
 	 // Skew the input space to determine which simplex cell we're in
@@ -187,6 +290,27 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 return 32.0*(n0 + n1 + n2 + n3);
 	 }
 	 // 4D simplex noise
+		/**
+		 * generates a noise signal in the Gradient Descent optimization algorithm, by
+		 * calculating the contribution from five simplex corners and scaling it to cover the
+		 * range [-1,1].
+		 * 
+		 * @param x 3D coordinates of the point for which the gradient is being computed, and
+		 * it is used to calculate the contributions from the five simplex corners.
+		 * 
+		 * @param y 2nd dimension of the simplex grid, and is used to calculate the contributions
+		 * from each corner of the simplex in the gradient calculation.
+		 * 
+		 * @param z 3D position of the simplex corner being evaluated, and it is used to
+		 * calculate the contribution from that corner to the gradient of the objective function.
+		 * 
+		 * @param w 4th coordinate of the current point in the "simplex" array, which is used
+		 * to calculate the contribution from the fourth corner of the simplex in the dot
+		 * product with the gradient vectors.
+		 * 
+		 * @returns a scalar value between -1 and 1 that represents the noise added to the
+		 * gradient of a signed distance field.
+		 */
 	 double noise(double x, double y, double z, double w) {
 
 	 // The skewing and unskewing factors are hairy again for the 4D case
@@ -212,7 +336,7 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 // To find out which of the 24 possible simplices we're in, we need to
 	 // determine the magnitude ordering of x0, y0, z0 and w0.
 	 // The method below is a good way of finding the ordering of x,y,z,w and
-	 // then find the correct traversal order for the simplex we’re in.
+	 // then find the correct traversal order for the simplex weÂ’re in.
 	 // First, six pair-wise comparisons are performed between each possible pair
 	 // of the four coordinates, and the results are used to add up binary bits
 	 // for an integer index.
