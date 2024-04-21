@@ -3,13 +3,11 @@ package com.ch;
 import org.lwjgl.Sys;
 
 /**
- * is a Java class that provides functions for calculating and tracking frame rate
- * (FPS) and time. The class has several public static methods: init(), calculateDelta(),
- * updateFPS(), getDelta(), getFPS(), and update(). These methods are used to initialize
- * the frame rate counter, calculate the delta time between frames, update the frame
- * rate counter, retrieve the current delta value, retrieve the current FPS value,
- * and update the time variable respectively. The class also has several instance
- * variables: fps, lastFPS, lastFrame, time, and delta.
+ * is a Java package that provides functions for measuring time and updating frames
+ * per second (FPS). The class has several methods for calculating and storing time,
+ * FPS, and delta (the difference between the current time and the previous frame).
+ * The update() method updates the FPS and calculates the delta, while the getDelta(),
+ * getFPS(), and getTime() methods provide access to these values.
  */
 public class Timer {
 
@@ -20,31 +18,32 @@ public class Timer {
 	public static float currentFPS;
     public static float time;
 
- /**
-  * calculates the seconds since the epoch (January 1, 1970, 00:00:00 UTC) based on
-  * the current system time and timer resolution.
-  * 
-  * @returns a long value representing the current time in milliseconds, calculated
-  * from the system's timer resolution.
-  */
+	/**
+	 * calculates the current time in milliseconds using the `Sys.getTime()` and
+	 * `Sys.getTimerResolution()` methods, and returns the result as a long value.
+	 * 
+	 * @returns a long value representing the current time in milliseconds, calculated
+	 * by multiplying the current system time in seconds by 1000 and dividing it by the
+	 * timer resolution.
+	 */
 	private static long getTimeS() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 
- /**
-  * initializes a variable `lastFPS` with the current time taken to execute a certain
-  * task.
-  */
+	/**
+	 * initializes a variable `lastFPS` with the current time value, captured using the
+	 * `getTimeS()` method.
+	 */
 	public static void init() {
 		lastFPS = getTimeS();
 	}
 
- /**
-  * calculates the time difference between two points, measured in milliseconds, and
-  * returns the result as a float value.
-  * 
-  * @returns a floating-point value representing the time difference between two frames.
-  */
+	/**
+	 * calculates the time elapsed between two frames, represented by `time` and `lastFrame`,
+	 * respectively. It returns the elapsed time as a float value.
+	 * 
+	 * @returns a floating-point value representing the time difference between two frames.
+	 */
 	private static float calculateDelta() {
 		long time = getTimeS();
 		float delta = (int) (time - lastFrame);
@@ -52,11 +51,10 @@ public class Timer {
 		return delta;
 	}
 
- /**
-  * updates the frame rate by incrementing a counter every second, storing the current
-  * frame rate in a variable, and resetting the counter to zero when it reaches a
-  * certain threshold.
-  */
+	/**
+	 * updates the frames per second (FPS) metric by incrementing the current FPS value
+	 * and resetting a timer every 1000 milliseconds.
+	 */
 	private static void updateFPS() {
 		if (getTimeS() - lastFPS > 1000) {
 			currentFPS = fps;
@@ -66,27 +64,28 @@ public class Timer {
 		fps++;
 	}
 
- /**
-  * returns the value of the `delta` field.
-  * 
-  * @returns a floating-point value representing the delta.
-  */
+	/**
+	 * returns the `delta` value, which is a static instance variable containing the
+	 * difference between two values.
+	 * 
+	 * @returns a floating-point value representing the delta.
+	 */
 	public static float getDelta() {
 		return delta;
 	}
 
- /**
-  * returns the current frames per second (FPS) metric for the application.
-  * 
-  * @returns the current frames per second (FPS) measurement.
-  */
+	/**
+	 * returns the current frame rate as a floating-point value.
+	 * 
+	 * @returns the current frame rate of the application in floating-point format.
+	 */
 	public static float getFPS() {
 		return currentFPS;
 	}
 
     /**
-     * retrieves the value of the `time` variable, which is a floating-point number
-     * representing the current time.
+     * returns the value of a `time` field, which is likely used to store the current
+     * time or date information.
      * 
      * @returns a floating-point representation of the current time.
      */
@@ -95,7 +94,7 @@ public class Timer {
     }
 
     /**
-     * updates FPS, calculates and sets a delta value, and adds it to a time variable.
+     * updates frame rate, calculates delta time, and adds it to a variable `time`.
      */
     public static void update() {
         updateFPS();
