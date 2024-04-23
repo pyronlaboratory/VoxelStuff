@@ -18,6 +18,16 @@ public class Vector2f {
 		return Math.max(x, y);
 	}
 
+	/**
+	 * computes the dot product of a `Vector2f` object and another vector, returning the
+	 * result as a single float value.
+	 * 
+	 * @param r 2D vector to be dot-producted with the `x` and `y` components of the
+	 * output vector.
+	 * 
+	 * @returns a floating-point number representing the dot product of the input vector
+	 * and another vector.
+	 */
 	public float dot(Vector2f r) {
 		return x * r.getX() + y * r.getY();
 	}
@@ -28,14 +38,44 @@ public class Vector2f {
 		return new Vector2f(x / length, y / length);
 	}
 
+	/**
+	 * calculates the vector cross product between two vectors represented as `Vector2f`
+	 * objects, returning the result as a single floating-point value.
+	 * 
+	 * @param r 2D vector to be multiplied with the current vector, resulting in the cross
+	 * product.
+	 * 
+	 * @returns a scalar value representing the cross product of two vectors.
+	 */
 	public float cross(Vector2f r) {
 		return x * r.getY() - y * r.getX();
 	}
 
+	/**
+	 * calculates a vector that is a linear interpolation between two given vectors,
+	 * weighted by the specified factor.
+	 * 
+	 * @param dest 2D destination point to which the current vector will be interpolated.
+	 * 
+	 * @param lerpFactor 0.0 to 1.0 value that determines how much the destination vector
+	 * should be blended with the current vector during the linear interpolation process.
+	 * 
+	 * @returns a vector that interpolates between two given vectors based on a specified
+	 * factor.
+	 */
 	public Vector2f lerp(Vector2f dest, float lerpFactor) {
 		return dest.sub(this).mul(lerpFactor).add(this);
 	}
 
+	/**
+	 * rotates a 2D vector by an angle in radians, returning the rotated vector in a new
+	 * coordinate system.
+	 * 
+	 * @param angle angle of rotation in radians.
+	 * 
+	 * @returns a new vector with x and y components that have been rotated by the provided
+	 * angle.
+	 */
 	public Vector2f rotate(float angle) {
 		double rad = Math.toRadians(angle);
 		double cos = Math.cos(rad);
@@ -44,15 +84,45 @@ public class Vector2f {
 		return new Vector2f((float) (x * cos - y * sin), (float) (x * sin + y * cos));
 	}
 
+	/**
+	 * takes a `r` parameter of type `Vector2f` and returns a new `Vector2f` instance
+	 * with the sum of the parameters' `x` and `y` coordinates.
+	 * 
+	 * @param r 2D vector to be added to the current vector.
+	 * 
+	 * @returns a new `Vector2f` object representing the sum of the input vector and the
+	 * provided vector.
+	 */
 	public Vector2f add(Vector2f r) {
 		return new Vector2f(x + r.getX(), y + r.getY());
 	}
 
+	/**
+	 * takes a single float argument `r` and returns a new `Vector2f` object with the sum
+	 * of the current vector's x-coordinate plus the `r` value, and the same y-coordinate.
+	 * 
+	 * @param r addition value to be added to the existing coordinates of the vector.
+	 * 
+	 * @returns a new `Vector2f` instance with the sum of the input `r` added to its `x`
+	 * and `y` components.
+	 */
 	public Vector2f add(float r) {
 		return new Vector2f(x + r, y + r);
 	}
 
 
+    /**
+     * takes two floating-point arguments `x` and `y`, returns a new `Vector2f` object
+     * representing the sum of the current object's `x` and `y` values with the given `x`
+     * and `y` values.
+     * 
+     * @param x 2D coordinate to add to the current position of the vector.
+     * 
+     * @param y 2nd component of the resulting vector.
+     * 
+     * @returns a new `Vector2f` instance representing the sum of the input `x` and `y`
+     * values.
+     */
     public Vector2f add(float x, float y) {
         return new Vector2f(this.x + x, this.y + y);
     }
