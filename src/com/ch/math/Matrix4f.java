@@ -1,5 +1,10 @@
 package com.ch.math;
 
+/**
+ * is a Java class that represents a 4x4 matrix, providing methods for initializing,
+ * rotating, and transforming matrices. It also provides methods for getting and
+ * setting the matrix elements, as well as transposing the matrix.
+ */
 public class Matrix4f {
 	
 	private float[][] data;
@@ -7,6 +12,21 @@ public class Matrix4f {
 	public Matrix4f() {
 		data = new float[4][4];
 	}
+	/**
+	 * initializes a matrix with identity values, meaning all elements are either 0 or
+	 * 1, and the matrices row and column major properties are preserved.
+	 * 
+	 * @returns a reference to the same Matrix4f object.
+	 * 
+	 * 	- The `Matrix4f` object is returned as the output, which represents an identity
+	 * matrix with all elements set to 0 or 1.
+	 * 	- The `data` array contains the components of the matrix, where each element is
+	 * a 3x3 sub-matrix representing the component of the larger matrix.
+	 * 	- Each sub-matrix has dimensions 3x3 and consists of elements that are either 0
+	 * or 1.
+	 * 	- The order of the output is (4,4), indicating that the returned matrix is a 4x4
+	 * identity matrix.
+	 */
 	public Matrix4f initIdentity() {
 		data[0][0] = 1;
 		data[0][1] = 0;
@@ -381,6 +401,13 @@ public class Matrix4f {
 	}
 
 	
+	/**
+	 * generates a 4x4 float array `res` from an input array `data`. It does so by iterating
+	 * over the rows and columns of `data` and copying the values to their corresponding
+	 * positions in `res`.
+	 * 
+	 * @returns an array of arrays containing the original data.
+	 */
 	public float[][] getData() {
 		float[][] res = new float[4][4];
 
@@ -392,6 +419,13 @@ public class Matrix4f {
 	}
 	
 	
+	/**
+	 * returns an array of floats representing the linear data. The array contains the
+	 * data points (x,y) for a linear dataset.
+	 * 
+	 * @returns an array of 12 floats, representing the data points for a linear regression
+	 * model.
+	 */
 	public float[] getLinearData() {
 		return new float[] {
 			data[0][0],
@@ -456,6 +490,10 @@ public class Matrix4f {
 	}
 
 	
+	/**
+	 * transposes an array of float arrays, replacing each element with the corresponding
+	 * element from the original array.
+	 */
 	public void transposeSelf() {
 		float[][] tr = new float[4][4];
 		for (int i = 0; i < 4; i++)
