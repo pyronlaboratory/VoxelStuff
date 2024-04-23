@@ -27,6 +27,12 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
+/**
+ * provides functionality for loading and managing textures in a 3D graphics application.
+ * It allows for texture binding and manipulation through methods such as `bind()`
+ * and `getID()`. The class also includes a `loadTexture()` method for loading textures
+ * from files.
+ */
 public class Texture {
 	
 	private String fileName;
@@ -37,24 +43,52 @@ public class Texture {
 		this.id = Texture.loadTexture(fileName);
 	}
 
+	/**
+	 * has no specific functionality as it is a protected method with no implementation
+	 * or invoked code. It is intended for internal use and does not have any external effect.
+	 */
 	@Override
 	protected void finalize() {
 	}
 
+	/**
+	 * binds a widget with the specified index to the underlying data source.
+	 */
 	public void bind() {
 		bind(0);
 	}
 
+	/**
+	 * sets the active texture slot in OpenGL using the `glActiveTexture` function and
+	 * binds a texture using the `glBindTexture` function. The texture is identified by
+	 * an integer value ranging from 0 to 31, inclusive.
+	 * 
+	 * @param samplerSlot 0-based index of a texture slot to bind to the current rendering
+	 * context, with valid values ranging from 0 to 31.
+	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
 		glActiveTexture(GL_TEXTURE0 + samplerSlot);
 		glBindTexture(GL_TEXTURE_2D, id);
 	}
 
+	/**
+	 * returns the value of the `id` field.
+	 * 
+	 * @returns the value of the `id` variable, which is an integer.
+	 */
 	public int getID() {
 		return id;
 	}
 
+	/**
+	 * loads a 2D image from a file and generates a texture for it, using the GL_TEXTURE_2D
+	 * format. It sets up the texture parameters and uploads the image data to the GPU.
+	 * 
+	 * @param fileName filename of the image to be loaded and read as an array of pixels.
+	 * 
+	 * @returns an integer identifier of a textured OpenGL buffer.
+	 */
 	private static int loadTexture(String fileName) {
 		try {
 			BufferedImage image = ImageIO.read(new File(fileName));
