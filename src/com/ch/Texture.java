@@ -26,6 +26,12 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 
+/**
+ * is a Java class for managing textures in OpenGL. It provides a simple way to load
+ * and bind textures, as well as getting the ID of the texture after loading it. The
+ * loadTexture method takes a file path as an argument and returns the ID of the
+ * loaded texture.
+ */
 public class Texture {
 
 	private int id;
@@ -37,20 +43,44 @@ public class Texture {
 	}
 
 
+	/**
+	 * 0 invokes the binding operation at index 0 of a data structure.
+	 */
 	public void bind() {
 		bind(0);
 	}
 
+	/**
+	 * sets the active texture slot to a specified index (samplerSlot) and binds a texture
+	 * to that slot using the `glBindTexture()` method. The function checks that the input
+	 * samplerSlot is within the valid range of 0 to 31 before executing the binding operation.
+	 * 
+	 * @param samplerSlot 0-based index of a texture slot in the current active texture
+	 * unit, with values ranging from 0 to 31.
+	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
 		glActiveTexture(GL_TEXTURE0 + samplerSlot);
 		glBindTexture(GL_TEXTURE_2D, id);
 	}
 
+	/**
+	 * returns the `id` field's value.
+	 * 
+	 * @returns an integer value representing the ID.
+	 */
 	public int getID() {
 		return id;
 	}
 
+	/**
+	 * loads a texture image from a file, converts it to an OpenGL texture, and returns
+	 * the ID of the created texture.
+	 * 
+	 * @param fileName name of the texture file to be loaded and read.
+	 * 
+	 * @returns an integer ID representing a loaded texture.
+	 */
 	private static int loadTexture(String fileName) {
 		try {
 			BufferedImage image = ImageIO.read(new File(fileName));
