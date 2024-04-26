@@ -13,7 +13,6 @@ public class Matrix4f {
 	public Matrix4f() {
 		data = new float[4][4];
 	}
-
 	/**
 	 * sets all elements of a Matrix4f object to identity values, i.e., elements are equal
 	 * to their own row and column sums.
@@ -192,7 +191,6 @@ public class Matrix4f {
 
 		return this;
 	}
-
 	/**
 	 * sets the scale factors for a matrix, by setting the corresponding elements of the
 	 * matrix to the input values x, y, and z.
@@ -238,7 +236,6 @@ public class Matrix4f {
 
 		return this;
 	}
-
 	/**
 	 * initializes a matrix for perspective projection, setting the proper values for the
 	 * view volume, aspect ratio, near and far distances, and resulting matrices.
@@ -553,7 +550,6 @@ public class Matrix4f {
 
 		return res;
 	}
-
 	/**
 	 * returns an array of arrays, where each inner array represents a 4x4 matrix,
 	 * containing the values of the `data` array at the specified indices.
@@ -612,7 +608,6 @@ public class Matrix4f {
 	public float get(int x, int y) {
 		return data[x][y];
 	}
-
 	/**
 	 * sets the value of a field named `data`.
 	 * 
@@ -629,7 +624,6 @@ public class Matrix4f {
 	public void SetM(float[][] data) {
 		this.data = data;
 	}
-
 	/**
 	 * sets a value to an element at a specific position in a two-dimensional array.
 	 * 
