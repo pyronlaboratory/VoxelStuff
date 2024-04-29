@@ -28,10 +28,11 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
 /**
- * provides functionality for loading and managing textures in a 3D graphics application.
- * It allows for texture binding and manipulation through methods such as `bind()`
- * and `getID()`. The class also includes a `loadTexture()` method for loading textures
- * from files.
+ * is an internal class in the OpenFL library that provides functionality for binding
+ * textures to the GPU and loading images from files. It has several methods for
+ * binding textures and uploading image data to the GPU, as well as getting the ID
+ * of a texture buffer. The class also provides a method for loading a 2D image from
+ * a file and generating a texture for it.
  */
 public class Texture {
 	
@@ -44,27 +45,26 @@ public class Texture {
 	}
 
 	/**
-	 * has no specific functionality as it is a protected method with no implementation
-	 * or invoked code. It is intended for internal use and does not have any external effect.
+	 * does not have any functionality as it is abstract and cannot be instantiated or
+	 * called directly.
 	 */
 	@Override
 	protected void finalize() {
 	}
 
 	/**
-	 * binds a widget with the specified index to the underlying data source.
+	 * 0 is called, which performs an operation involving the binding of something.
 	 */
 	public void bind() {
 		bind(0);
 	}
 
 	/**
-	 * sets the active texture slot in OpenGL using the `glActiveTexture` function and
-	 * binds a texture using the `glBindTexture` function. The texture is identified by
-	 * an integer value ranging from 0 to 31, inclusive.
+	 * binds a texture to a specific texture slot (0-31) using the `glActiveTexture()`
+	 * and `glBindTexture()` functions.
 	 * 
-	 * @param samplerSlot 0-based index of a texture slot to bind to the current rendering
-	 * context, with valid values ranging from 0 to 31.
+	 * @param samplerSlot 0-based index of a texture slot within the current GL context,
+	 * which is used to select and bind a specific texture for rendering.
 	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
@@ -73,21 +73,21 @@ public class Texture {
 	}
 
 	/**
-	 * returns the value of the `id` field.
+	 * retrieves the value of the `id` field of a class instance and returns it as an integer.
 	 * 
-	 * @returns the value of the `id` variable, which is an integer.
+	 * @returns an integer representing the value of `id`.
 	 */
 	public int getID() {
 		return id;
 	}
 
 	/**
-	 * loads a 2D image from a file and generates a texture for it, using the GL_TEXTURE_2D
-	 * format. It sets up the texture parameters and uploads the image data to the GPU.
+	 * loads a 2D image from a file and creates a texture object in OpenGL, handling pixel
+	 * data for RGBA8 format. It also generates mipmap if requested.
 	 * 
-	 * @param fileName filename of the image to be loaded and read as an array of pixels.
+	 * @param fileName filename of the image to be loaded as a texture.
 	 * 
-	 * @returns an integer identifier of a textured OpenGL buffer.
+	 * @returns an integer ID representing a textured OpenGL resource.
 	 */
 	private static int loadTexture(String fileName) {
 		try {

@@ -13,29 +13,27 @@ import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
 /**
- * in this project is responsible for handling the rendering of a 3D scene using the
- * Java OpenGL API. It sets up the graphics context, loads a shader and a texture,
- * and initializes a world object. The loop method updates the camera position and
- * renderes the scene using the World object. The update method processes input events
- * and updates the camera position, while the render method renders the scene using
- * the Shader class. Finally, the exit method provides an exit status when the program
- * is closed.
+ * of this Java program is responsible for creating and rendering a 3D scene using
+ * the OpenGL API. It initializes the GLFW library to handle window management and
+ * keyboard input, loads a 3D model from a file, and sets up a camera and a shader
+ * program to render the scene. The program then enters an infinite loop where it
+ * updates the position of an object based on user input and renders the scene using
+ * the shader program. Finally, it provides a method for terminating the application
+ * with a specific exit status.
  */
 public class Main {
 	
- /**
-  * initializes display and graphics libraries, enters an infinite loop for rendering
-  * and event handling, and exits with a successful return value of 0.
-  * 
-  * @param args program's command-line arguments passed to the `main` function by the
-  * operating system or user.
-  * 
-  * 	- `args`: an array of `String` values representing command-line arguments passed
-  * to the program. The length of this array is provided by the `main` method caller.
-  * 	- Each element in `args`: a single `String` value representing a command-line
-  * argument. These values can be used as input for the program, or they can be ignored
-  * if appropriate.
-  */
+	/**
+	 * initializes display and GL resources, enters an infinite loop, and exits with a
+	 * success code (0).
+	 * 
+	 * @param args program's command-line arguments, which are passed to
+	 * the `main()` method when the program is executed.
+	 * 
+	 * 	- Length: The `args` array has 0 or more elements, which are strings.
+	 * 	- Elements: Each element in `args` is a string that represents an command-line
+	 * argument passed to the program at runtime.
+	 */
 	public static void main(String[] args) {
 		
 		initDisplay();
@@ -52,11 +50,11 @@ public class Main {
 //	private static Chunk[][][] ch;
 	private static World w;
 	
- /**
-  * sets up a display mode with resolution 1920x1080, creates a GL context with forward
-  * compatibility and core profile enabled, and enables vsync. It also prints the GL
-  * version string using `GL11.glGetString()`.
-  */
+	/**
+	 * sets up a display mode with a resolution of 1920x1080, creates a GL context with
+	 * forward compatibility and core profile support, and enables vsync. It also prints
+	 * the GL version string using `glGetString`.
+	 */
 	private static void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1920, 1080));
@@ -68,10 +66,11 @@ public class Main {
 		}
 	}
 	
- /**
-  * initializes OpenGL components such as clear color, grabbing mouse events, enabling
-  * depth test and cull face, loading shader, texture, and vertex data.
-  */
+	/**
+	 * initializes various GL settings for a 3D graphics program, including color, depth
+	 * testing, and culling face. It also loads a shader, creates a texture, and initializes
+	 * a camera and world objects.
+	 */
 	private static void initGL() {
 		
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
@@ -114,11 +113,11 @@ public class Main {
 		
 	}
 	
- /**
-  * continuously loops while a close request is not received and the escape key is not
-  * pressed. It updates the display title, clears the color and depth buffers, and
-  * renders the scene using the `render()` method.
-  */
+	/**
+	 * continuously runs a loop until the `Display.isCloseRequested()` or
+	 * `Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)` is triggered. It updates the title and
+	 * renders the scene using `GL11.glClear()` and `render()`.
+	 */
 	private static void loop() {
 		
 		Timer.init();
@@ -141,23 +140,22 @@ public class Main {
 		
 	}
 	
- /**
-  * updates the position of an object `w` based on input provided by a `c` object and
-  * a time interval `dt`.
-  * 
-  * @param dt time step or simulation speedup used to update the game objects' positions
-  * and states during the rendering process.
-  */
+	/**
+	 * updates the position of an object (`w`) based on input and transformation.
+	 * 
+	 * @param dt time step for updating the objects' positions and is used to calculate
+	 * the change in position over time.
+	 */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
 	}
 
- /**
-  * renders a 3D model using a scene graph and uniform colors. It enables and disables
-  * attributess, binds the scene graph, and draws the model using the Model's draw()
-  * method.
-  */
+	/**
+	 * renders a 3D model using a shader program and a camera object. It sets up the
+	 * necessary uniforms and matrices for rendering, and then calls the `render` method
+	 * on the camera object to produce the final image.
+	 */
 	private static void render() {
 		
 //		Model.enableAttribs();
@@ -179,13 +177,12 @@ public class Main {
 //		Model.disableAttribs();
 	}
 	
- /**
-  * terminates the current Java process with a specific exit status, which can be used
-  * to indicate the reason for the termination.
-  * 
-  * @param status value to be passed to the `System.exit()` method, which terminates
-  * the application and returns control to the operating system.
-  */
+	/**
+	 * terminates the Java process with the specified status code.
+	 * 
+	 * @param status exit code that the `System.exit()` method will use to terminate the
+	 * application.
+	 */
 	private static void exit(int status) {
 		System.exit(status);
 	}

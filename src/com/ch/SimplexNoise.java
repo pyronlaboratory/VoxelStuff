@@ -1,11 +1,23 @@
 package com.ch;
 
 /**
- * in the provided code is responsible for generating noise using the Simplex Noise
- * algorithm. The algorithm works by creating a grid of points in a multi-dimensional
- * space and then interpolating between them to create a smooth noise pattern. The
- * class provides methods for calculating the noise at different coordinates, as well
- * as scaling the result to cover a specific range (-1, 1).
+ * in Java is used to generate noise patterns using the Simplex Noise algorithm. It
+ * provides a simple way to generate noise patterns for various applications such as
+ * graphics, games, and scientific simulations. The class has several methods that
+ * take integer parameters and return a double value representing the noise pattern
+ * at that location. These methods include:
+ * 
+ * 	- `noise(int x, int y)`: Generates noise at a specific location (x,y) based on
+ * the Simplex Noise algorithm.
+ * 	- `noise2D(int x0, int y0, int w0, int h0)`: Generates noise in a 2D space using
+ * the second simplex corner.
+ * 	- `noise3D(int x0, int y0, int z0, int w0)`: Generates noise in a 3D space using
+ * all four simplex corners.
+ * 	- `perlinNoise(int x, int y)`: Generates Perlin noise at a specific location (x,y)
+ * based on the Simplex Noise algorithm.
+ * 
+ * These methods take different integer parameters and return a double value representing
+ * the noise pattern at that location.
  */
 public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 private static int grad3[][] = {{1,1,0},{-1,1,0},{1,-1,0},{-1,-1,0},
@@ -48,93 +60,90 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 {2,1,0,3},{0,0,0,0},{0,0,0,0},{0,0,0,0},{3,1,0,2},{0,0,0,0},{3,2,0,1},{3,2,1,0}};
 	 // This method is a *lot* faster than using (int)Math.floor(x)
 		/**
-		 * computes the nearest integer to a given double value, either rounding up or down
-		 * depending on the value's sign.
+		 * computes the nearest integer to a given double value, returning it as an int. If
+		 * the input is positive, it returns the exact integer value. Otherwise, it returns
+		 * the integer value minus 1.
 		 * 
-		 * @param x double value to be rounded, which is used to determine the integer return
-		 * value between 0 and (inclusive) or between 0 and (exclusive).
+		 * @param x floating-point number that is to be rounded to an integer using the fast
+		 * floor algorithm.
 		 * 
-		 * @returns an integer value representing the nearest integer to the given double value.
+		 * @returns an integer value between 0 and the original double value, inclusive.
 		 */
 	 private static int fastfloor(double x) {
 	 return x>0 ? (int)x : (int)x-1;
 	 }
 		/**
-		 * takes a two-dimensional array `g` and two scalar arguments `x` and `y`, returning
-		 * their dot product.
+		 * computes the dot product of a given vector and another scalar value.
 		 * 
-		 * @param g 2D coordinates of a point in the Cartesian coordinate system, with the
-		 * first element of the array representing the x-coordinate and the second element
-		 * representing the y-coordinate.
+		 * @param g 2D coordinates of a point in the function.
 		 * 
-		 * @param x 0-based coordinate of a point in the two-dimensional space, where it is
-		 * multiplied by the corresponding element of the input array `g` to produce the dot
-		 * product value.
+		 * @param x 0-based index of the first element in the input array of integers, which
+		 * is multiplied by the value of `x` before being combined with the value of `y`.
 		 * 
-		 * @param y 2nd element of the input array `g`.
+		 * @param y 2nd coordinate of the point being calculated and is multiplied by `g[1]`
+		 * before being added to the result of the multiplication of `g[0]` and `x`.
 		 * 
-		 * @returns a double value computed as the product of two input arguments.
+		 * @returns a double value calculated by multiplying the elements of an integer array
+		 * with the input values `x` and `y`.
 		 */
 	 private static double dot(int g[], double x, double y) {
 	 return g[0]*x + g[1]*y; }
 		/**
-		 * takes four arguments: `g`, `x`, `y`, and `z`. It returns a double value calculated
-		 * by multiplying the elements of the `g` array with `x`, `y`, and `z`, respectively,
-		 * and then summing them.
+		 * computes the dot product of a given vector and another scalar value, using the
+		 * elements of the input vector as coefficients.
 		 * 
-		 * @param g 3D coordinates of a point in the function's calculation of the dot product
-		 * between the 3D vector (represented by `x`, `y`, and `z`) and some other unknown
-		 * 3D vector.
+		 * @param g 3D coordinates of a point in the function, with each element of the array
+		 * corresponding to a coordinate (x, y, or z).
 		 * 
-		 * @param x 0th element of an array of doubles, which is multiplied by the input value
-		 * before being combined with the inputs for the 1st and 2nd parameters to produce
-		 * the output value.
+		 * @param x 0th component of the input array `g`.
 		 * 
-		 * @param y second dimension of the array `g`, which is multiplied by the argument
-		 * `y` and added to the result of the multiplication of the first element of the array
-		 * with the argument `x`.
+		 * @param y 2nd coordinate of the dot product calculation in the function `dot()`.
 		 * 
-		 * @param z 3rd dimension of the input array `g`, and is multiplied by the corresponding
-		 * element of the array when calculating the output value.
+		 * @param z 3rd dimension of the array `g`, which is multiplied by the corresponding
+		 * element of the array to calculate the output value.
 		 * 
-		 * @returns a scalar value representing the dot product of the given vectors.
+		 * @returns a value representing the dot product of the given vectors.
 		 */
 	 private static double dot(int g[], double x, double y, double z) {
 	 return g[0]*x + g[1]*y + g[2]*z; }
 		/**
-		 * computes the dot product of a given array of integers `g` with a set of scalars
-		 * `x`, `y`, `z`, and `w`. The function returns the result of the dot product computation.
+		 * computes the dot product of four arguments: `x`, `y`, `z`, and `w`. It returns the
+		 * result as a double value.
 		 * 
-		 * @param g 4-dimensional coordinates of a point in space, with each element of the
-		 * array representing one dimension of the coordinate system.
+		 * @param g 4-dimensional coordinate of the point where the dot product is being
+		 * computed, with each element of `g` corresponding to one of the four coordinates
+		 * (x, y, z, and w).
 		 * 
-		 * @param x 0th element of the input array `g`.
+		 * @param x 0th element of an array `g`, which is multiplied by `x` before combining
+		 * with the other parameters to compute the output value.
 		 * 
-		 * @param y 2nd element of the input array `g`.
+		 * @param y 2nd coordinate of the point in 3D space where the dot product is being calculated.
 		 * 
-		 * @param z 3rd dimension of the array `g`, and is multiplied by the value of `w`
-		 * before being combined with the other input parameters to produce the output result.
+		 * @param z 3rd dimension of the input array `g`, which is multiplied by the value
+		 * of `w` and added to the results of the previous multiplication and addition operations.
 		 * 
-		 * @param w 4th component of a point in 3D space, which is multiplied by the corresponding
-		 * value of the array `g` to produce the output result.
+		 * @param w 4th component of the input array, which is multiplied by `g[3]` and added
+		 * to the output result.
 		 * 
-		 * @returns a double value representing the dot product of the input vectors.
+		 * @returns a floating-point number representing the dot product of the input vectors.
 		 */
 	 private static double dot(int g[], double x, double y, double z, double w) {
 	 return g[0]*x + g[1]*y + g[2]*z + g[3]*w; }
 	 // 2D simplex noise
 		/**
-		 * generates a noise value based on the input coordinates (x, y) and a simplex-based
-		 * hash function. The output is a scaled value between [-1, 1].
+		 * generates a noise value based on the distance from a grid origin, using an equilateral
+		 * triangle simplex to estimate the noise at different locations. The function
+		 * calculates the contribution from each corner of the simplex and returns the scaled
+		 * final noise value within the interval [-1,1].
 		 * 
-		 * @param xin 2D coordinate of the point where the noise is being evaluated, and it
-		 * is used to calculate the hashed gradient indices for the three simplex corners.
+		 * @param xin 2D position of the point in the input space, which is skewed to determine
+		 * which simplex cell it belongs to.
 		 * 
-		 * @param yin 2D noise value for the y-coordinate of the pixel being processed, which
-		 * is used to compute the contribution from the middle simplex corner.
+		 * @param yin 2D noise input coordinate, which is used to calculate the hashed gradient
+		 * indices and contribute to the final noise value.
 		 * 
-		 * @returns a scaled noise value between [-1, 1], calculated based on the distances
-		 * from three simplex corners in Cartesian coordinates.
+		 * @returns a scaled value between -1 and 1, representing a noise value in the interval
+		 * [-1,1].
 		 */
 	 public static double noise(double xin, double yin) {
 	 double n0, n1, n2; // Noise contributions from the three corners
@@ -192,21 +201,21 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 }
 	 // 3D simplex noise
 		/**
-		 * generates a noise value based on four corner points in 3D space, using a Hashed
-		 * Gradient Index (HGI) approach to calculate the contribution from each corner. The
-		 * output is a scaled noise value within [-1,1].
+		 * generates a noise value for a given point in a 3D space, based on the coordinates
+		 * of four simplex corners and their hashed gradient indices. The noise value is
+		 * calculated as a sum of contributions from each corner, scaled to stay within [-1,1].
 		 * 
-		 * @param xin 3D noise simulation's x-coordinate of the current position.
+		 * @param xin 3D coordinate of the point at which noise is being calculated.
 		 * 
-		 * @param yin 3D noise generator's input value for the vertical dimension, which is
-		 * skewed and then used to determine the simplex cell it belongs to.
+		 * @param yin 2D input value for the current 3D noise generation, which is skewed and
+		 * unskewed to determine the simplex cell it belongs to.
 		 * 
-		 * @param zin 3D coordinate of the current point in the noise simulation, which is
-		 * used to calculate the contributions from the four simplex corners and the final
-		 * noise value.
+		 * @param zin 3D noise value at a specific point in space, which is used as an input
+		 * to the function and affects the calculation of the noise contribution from each
+		 * simplex corner.
 		 * 
-		 * @returns a scalar value between -1 and 1, representing a noise value for a given
-		 * set of input coordinates.
+		 * @returns a scaled noise value between [-1, 1], calculated from the contributions
+		 * of four simplex corners.
 		 */
 	 public static double noise(double xin, double yin, double zin) {
 	 double n0, n1, n2, n3; // Noise contributions from the four corners
@@ -291,25 +300,26 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 }
 	 // 4D simplex noise
 		/**
-		 * generates a noise signal in the Gradient Descent optimization algorithm, by
-		 * calculating the contribution from five simplex corners and scaling it to cover the
-		 * range [-1,1].
+		 * calculates a Perlin noise simulation at a given position and scale, using a
+		 * simplex-based algorithm to generate a set of coordinates that are then used to
+		 * calculate the noise value.
 		 * 
-		 * @param x 3D coordinates of the point for which the gradient is being computed, and
-		 * it is used to calculate the contributions from the five simplex corners.
+		 * @param x 3D coordinates of the point to evaluate the gradient at, and it is used
+		 * in the calculation of the contribution from each simplex corner in the gradients
+		 * array (`grad4`).
 		 * 
-		 * @param y 2nd dimension of the simplex grid, and is used to calculate the contributions
-		 * from each corner of the simplex in the gradient calculation.
+		 * @param y 2nd coordinate of the point being gradients computed for, and is used to
+		 * calculate the contribution from the second corner of the simplex in the gradient
+		 * calculation.
 		 * 
-		 * @param z 3D position of the simplex corner being evaluated, and it is used to
-		 * calculate the contribution from that corner to the gradient of the objective function.
+		 * @param z 3D position of the simplex corner in the grid, which is used to calculate
+		 * the gradient contribution from that corner in the dot product calculation.
 		 * 
-		 * @param w 4th coordinate of the current point in the "simplex" array, which is used
-		 * to calculate the contribution from the fourth corner of the simplex in the dot
-		 * product with the gradient vectors.
+		 * @param w 4th coordinate of the gradient vector, which is used to compute the dot
+		 * product with the simplex corners' positions in the `(x,y,z)` space.
 		 * 
-		 * @returns a scalar value between -1 and 1 that represents the noise added to the
-		 * gradient of a signed distance field.
+		 * @returns a scalar value between -1 and 1 that represents the complexity of a given
+		 * point cloud.
 		 */
 	 double noise(double x, double y, double z, double w) {
 

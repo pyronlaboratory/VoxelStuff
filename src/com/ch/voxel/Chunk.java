@@ -145,6 +145,14 @@ public class Chunk {
 	
 	public void toGenModel() { toGenModel(false); };
 	
+	/**
+	 * Generates a 3D model from a set of vertices, indices, and blocks. It determines
+	 * the maximum index, generates new vertices and indices, and creates the model.
+	 * 
+	 * @param now boolean flag to indicate whether the model should be re-generated or
+	 * loaded from existing arrays, with a value of `true` for re-generation and `false`
+	 * for loading.
+	 */
 	public void toGenModel(boolean now) {
 
 		int max_index = 0;
@@ -191,6 +199,26 @@ public class Chunk {
 		return this.model;
 	}
 
+	/**
+	 * Generates high-quality documentation for given code by adding vertices and indices
+	 * to a list, based on the block type and its position in the space.
+	 * 
+	 * @param vertices 2D coordinates of the vertices that make up the 3D shape of the
+	 * block, and is used to add those vertices to a list for further processing.
+	 * 
+	 * @param indices 3D indices of vertices in the mesh, and is used to update the array
+	 * `vertices` by adding or removing indices based on the type of block being processed.
+	 * 
+	 * @param block 3D block being generated and determines which type of geometry is
+	 * added to the vertices and indices lists.
+	 * 
+	 * @param max_index 0-based index of the current block being processed, and is used
+	 * to update the indices array with the new vertex positions and to increment the
+	 * index for each new block.
+	 * 
+	 * @returns an integer representing the maximum index value added to the `indices`
+	 * list for each block type.
+	 */
 	private static int gen(List<Float> vertices, List<Integer> indices, Block block, int max_index) {
 		
 		float x = block.x;
