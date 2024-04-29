@@ -6,8 +6,8 @@ import org.lwjgl.Sys;
  * is a Java package that provides functions for measuring time and updating frames
  * per second (FPS). The class has several methods for calculating and storing time,
  * FPS, and delta (the difference between the current time and the previous frame).
- * The update() method updates the FPS and calculates the delta, while the getDelta(),
- * getFPS(), and getTime() methods provide access to these values.
+ * These include `getTimeS()`, `init()`, `calculateDelta()`, `updateFPS()`, `getDelta()`,
+ * `getFPS()`, and `update()`.
  */
 public class Timer {
 
@@ -19,11 +19,11 @@ public class Timer {
     public static float time;
 
 	/**
-	 * calculates the current time in milliseconds using the `Sys.getTime()` and
-	 * `Sys.getTimerResolution()` methods, and returns the result as a long value.
+	 * multiplies the current system time by 1000 and divides the result by the timer
+	 * resolution to return a long value representing the elapsed time in milliseconds
+	 * since the function was created.
 	 * 
-	 * @returns a long value representing the current time in milliseconds, calculated
-	 * by multiplying the current system time in seconds by 1000 and dividing it by the
+	 * @returns a long value representing the current time in milliseconds, adjusted for
 	 * timer resolution.
 	 */
 	private static long getTimeS() {
@@ -31,18 +31,17 @@ public class Timer {
 	}
 
 	/**
-	 * initializes a variable `lastFPS` with the current time value, captured using the
-	 * `getTimeS()` method.
+	 * initializes a variable `lastFPS` with the current time.
 	 */
 	public static void init() {
 		lastFPS = getTimeS();
 	}
 
 	/**
-	 * calculates the time elapsed between two frames, represented by `time` and `lastFrame`,
-	 * respectively. It returns the elapsed time as a float value.
+	 * calculates the time difference between two points, represented by `time` and
+	 * `lastFrame`, respectively. It returns the time difference as a float value.
 	 * 
-	 * @returns a floating-point value representing the time difference between two frames.
+	 * @returns a floating-point number representing the time difference between two frames.
 	 */
 	private static float calculateDelta() {
 		long time = getTimeS();
@@ -52,8 +51,8 @@ public class Timer {
 	}
 
 	/**
-	 * updates the frames per second (FPS) metric by incrementing the current FPS value
-	 * and resetting a timer every 1000 milliseconds.
+	 * updates the frames per second (FPS) metric by incrementing the current FPS and
+	 * resetting a timer when a threshold is met.
 	 */
 	private static void updateFPS() {
 		if (getTimeS() - lastFPS > 1000) {
@@ -65,36 +64,35 @@ public class Timer {
 	}
 
 	/**
-	 * returns the `delta` value, which is a static instance variable containing the
-	 * difference between two values.
+	 * retrieves the value of the `delta` field, which is used to calculate the distance
+	 * traveled by an object.
 	 * 
-	 * @returns a floating-point value representing the delta.
+	 * @returns a floating-point value representing the difference between two values.
 	 */
 	public static float getDelta() {
 		return delta;
 	}
 
 	/**
-	 * returns the current frame rate as a floating-point value.
+	 * returns the current frame rate of a program in floating-point format.
 	 * 
-	 * @returns the current frame rate of the application in floating-point format.
+	 * @returns the current frame rate of the application.
 	 */
 	public static float getFPS() {
 		return currentFPS;
 	}
 
     /**
-     * returns the value of a `time` field, which is likely used to store the current
-     * time or date information.
+     * returns the value of a field named `time`.
      * 
-     * @returns a floating-point representation of the current time.
+     * @returns a floating-point representation of the current system time.
      */
     public static float getTime() {
         return time;
     }
 
     /**
-     * updates frame rate, calculates delta time, and adds it to a variable `time`.
+     * updates the FPS, calculates and limits the delta time, and increments the time variable.
      */
     public static void update() {
         updateFPS();
