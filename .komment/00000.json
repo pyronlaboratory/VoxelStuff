@@ -1,0 +1,430 @@
+[
+  {
+    "name": "Camera.java",
+    "path": "src/com/ch/Camera.java",
+    "content": {
+      "structured": {
+        "description": "An abstract class `Camera` that provides methods for calculating view and projection matrices, as well as transforming positions and rotations. The class also has an abstract method for calculating the projection matrix and another for adjusting to a specified viewport size. Additionally, it provides a high-level summary of what all the code does.",
+        "items": [
+          {
+            "id": "fe89caa0-1266-b784-c34c-9a5e4fa548c5",
+            "ancestors": [],
+            "description": "Is an abstract class that serves as a base for other classes in the Camera package. It provides an abstract method called `getAsMatrix4()` which returns a Matrix4f object, but does not provide any implementation details. The class also does not contain any fields or methods of its own and is intended to be extended by other classes in the package.",
+            "name": "Camera",
+            "location": {
+              "start": 12,
+              "insert": 6,
+              "offset": " ",
+              "indent": 0,
+              "comment": {
+                "start": 5,
+                "end": 11
+              }
+            },
+            "item_type": "class",
+            "length": 122,
+            "docLength": 6
+          },
+          {
+            "id": "6d6ab541-6dbb-4a92-e74a-a26e4c50cdde",
+            "ancestors": [
+              "fe89caa0-1266-b784-c34c-9a5e4fa548c5"
+            ],
+            "description": "Retrieves a Matrix4f object representing the view projection matrix, which combines the view and projection transformations. If the matrix has not been previously calculated or updated, it will be recalculated on demand.",
+            "params": [],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a `Matrix4f` object representing the view projection matrix.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "// assume camera is an instance of Camera class \nMatrix4f viewProjectionMat = camera.getViewProjection();\n",
+              "description": "\nIn this example, we first obtain a reference to the camera object and then call the getViewProjection method on it. The resulting Matrix4f object represents the combined view projection matrix of the camera. The viewProjectionMat4 variable is set to null if no transformation has been applied or if the transform field has changed since the last calculation. If the viewProjectionMat4 variable is not null and has not changed, the calculateViewMatrix method is called."
+            },
+            "name": "getViewProjection",
+            "location": {
+              "start": 44,
+              "insert": 24,
+              "offset": "\t",
+              "indent": 1,
+              "comment": {
+                "start": 23,
+                "end": 43
+              }
+            },
+            "item_type": "method",
+            "length": 8,
+            "docLength": 20
+          },
+          {
+            "id": "d5993249-0785-a6a5-d647-693ff20b06b0",
+            "ancestors": [
+              "fe89caa0-1266-b784-c34c-9a5e4fa548c5"
+            ],
+            "description": "Calculates the view matrix by multiplying a rotation matrix, a translation matrix, and a projection matrix.",
+            "params": [],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a matrix representing the view transformation of a 3D scene from a camera's perspective, taking into account both rotation and translation of the camera.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "public static void main(String[] args) {\n    Camera camera = new MyCamera(); // Replace with the name of your camera class\n\n    Matrix4f viewProjectionMat4 = camera.calculateViewMatrix();\n}\n",
+              "description": "\nThe code above creates an instance of a custom camera class called \"MyCamera\", which extends the abstract Camera class. Then, it calls the calculateViewMatrix() method on the MyCamera object to get a Matrix4f representing the view projection transformation. The resulting Matrix4f can then be used in various applications such as rendering 3D graphics or creating machine learning models."
+            },
+            "name": "calculateViewMatrix",
+            "location": {
+              "start": 70,
+              "insert": 53,
+              "offset": "\t",
+              "indent": 1,
+              "comment": {
+                "start": 52,
+                "end": 69
+              }
+            },
+            "item_type": "method",
+            "length": 8,
+            "docLength": 17
+          },
+          {
+            "id": "6bc336cb-228e-b6b1-764b-6f84702320ed",
+            "ancestors": [
+              "fe89caa0-1266-b784-c34c-9a5e4fa548c5"
+            ],
+            "description": "Generates a 4x4 matrix representing a translation from the origin, calculated by multiplying the position of the camera by -1 and then translating it using the `initTranslation` method of the `Matrix4f` class.",
+            "params": [],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a 4x4 matrix representing the translation of the camera relative to its initial position.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "public class CustomCamera extends Camera {\n\t\t@Override\n\t\tprotected Matrix4f calculateProjectionMatrix(CameraStruct data) {\n\t\t\t// Calculate the projection matrix based on the camera's position and rotation\n\t\t}\n\n\t\t@Override\n\t\tvoid adjustToViewport(int width, int height) {\n\t\t\t// Adjust the viewport to match the specified dimensions\n\t\t}\n\t}\n\n\tpublic class ExampleUsage {\n\t\tpublic static void main(String[] args) {\n\t\t\tCustomCamera camera = new CustomCamera();\n\t\t\tMatrix4f translationMatrix = camera.getTranslationMatrix();\n\t\t\t// Use the translation matrix for a specific purpose\n\t\t}\n\t}\n",
+              "description": "\nIn this example, the CustomCamera class extends the Camera class and overrides the calculateProjectionMatrix and adjustToViewport methods. The ExampleUsage class creates an instance of the CustomCamera class and uses the getTranslationMatrix method to retrieve a translation matrix."
+            },
+            "name": "getTranslationMatrix",
+            "location": {
+              "start": 95,
+              "insert": 79,
+              "offset": "\t",
+              "indent": 1,
+              "comment": {
+                "start": 78,
+                "end": 94
+              }
+            },
+            "item_type": "method",
+            "length": 4,
+            "docLength": 16
+          },
+          {
+            "id": "4175eb86-9a79-7d84-8043-3a8112c6fca6",
+            "ancestors": [
+              "fe89caa0-1266-b784-c34c-9a5e4fa548c5"
+            ],
+            "description": "Returns a `Transform` object representing the current transformation state of an application.",
+            "params": [],
+            "returns": {
+              "type_name": "Transform",
+              "description": "the `transform` object itself.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "public static void main(String[] args) {\n\t\tCamera camera = new Camera();\n\t\tTransform transform = camera.getTransform();\n\t\tSystem.out.println(\"Transform: \" + transform);\n\t}\n",
+              "description": ""
+            },
+            "name": "getTransform",
+            "location": {
+              "start": 112,
+              "insert": 100,
+              "offset": "\t",
+              "indent": 1,
+              "comment": {
+                "start": 99,
+                "end": 111
+              }
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": 12
+          },
+          {
+            "id": "23c86f82-5e38-03ae-e44c-6854508078bb",
+            "ancestors": [
+              "fe89caa0-1266-b784-c34c-9a5e4fa548c5"
+            ],
+            "description": "Is an abstract class that serves as a base for other classes in the Camera package. It provides an abstract method called `getAsMatrix4()` which returns a Matrix4f object, but does not provide any implementation details. The class does not contain any fields or methods of its own and is intended to be extended by other classes in the package.",
+            "name": "CameraStruct",
+            "location": {
+              "start": 127,
+              "insert": 120,
+              "offset": "\t",
+              "indent": 1,
+              "comment": {
+                "start": 119,
+                "end": 126
+              }
+            },
+            "item_type": "class",
+            "length": 5,
+            "docLength": 7
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Camera3D.java",
+    "path": "src/com/ch/Camera3D.java",
+    "content": {
+      "structured": {
+        "description": "A `PerspectiveCamera` class that handles various aspects of camera perspectives in 3D rendering. The class provides methods for initializing and modifying a camera's position, rotation, field of view (FOV), aspect ratio, near and far distances, and movement speed based on keyboard and mouse input. Additionally, the code includes a `processInput` method that processes input from the user, including rotating and moving the camera based on mouse and keyboard inputs, and scaling the movement speed based on the LShift key.",
+        "items": [
+          {
+            "id": "798702ce-b353-afa6-724d-2d16a22842b3",
+            "ancestors": [],
+            "description": "Is responsible for managing camera functionality in a 3D environment. It provides methods to create and manipulate matrices for perspective projection, as well as handling input from the mouse and keyboard to rotate and move objects. Additionally, it has a processInput method that applies movements based on time and keyboard input, while also scaling speed based on the LShift key.",
+            "name": "Camera3D",
+            "location": {
+              "start": 17,
+              "insert": 10,
+              "offset": " ",
+              "indent": 0,
+              "comment": {
+                "start": 9,
+                "end": 16
+              }
+            },
+            "item_type": "class",
+            "length": 155,
+            "docLength": 7
+          },
+          {
+            "id": "d130ea86-e86d-5791-294a-34219269561a",
+            "ancestors": [
+              "798702ce-b353-afa6-724d-2d16a22842b3"
+            ],
+            "description": "Takes a `CameraStruct` object as input and returns the projection matrix in Matrix4f format.",
+            "params": [
+              {
+                "name": "data",
+                "type_name": "CameraStruct",
+                "description": "3D camera's transformation matrix as a `Matrix4f` object, which is then assigned to the function's return value, a `Matrix4f` object named `projection`.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a Matrix4f object containing the projection matrix.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "import java.util.Objects;\nimport org.lwjgl.BufferUtils;\nimport org.lwjgl.opengl.GL11C;\nimport org.lwjgl.opengl.GL20;\nimport static org.lwjgl.opengl.GL20.*;\nimport static org.lwjgl.system.MemoryUtil.*;\n\npublic class CameraStruct {\n    private float aspect;\n    private float zNear;\n    private float zFar;\n    private float fov;\n    private Matrix4f projection;\n\n    public CameraStruct(float fov, float aspect, float zNear, float zFar) {\n        this.fov = fov;\n        this.aspect = aspect;\n        this.zNear = zNear;\n        this.zFar = zFar;\n    }\n\n    public Matrix4f getAsMatrix4() {\n        return new Matrix4f().initPerspective(fov, aspect, zNear, zFar);\n    }\n}\n\npublic class Camera {\n    private CameraStruct data;\n    private Matrix4f projection;\n\n    public Camera(float fov, float aspect, float zNear, float zFar) {\n        this.data = new CameraStruct(fov, aspect, zNear, zFar);\n    }\n\n    public void calculateProjectionMatrix() {\n        projection = data.getAsMatrix4();\n    }\n}\n",
+              "description": "\nHere is an example of how the method would be used:\n"
+            },
+            "name": "calculateProjectionMatrix",
+            "location": {
+              "start": 43,
+              "insert": 25,
+              "offset": "\t",
+              "indent": 1,
+              "comment": {
+                "start": 24,
+                "end": 42
+              }
+            },
+            "item_type": "method",
+            "length": 4,
+            "docLength": 18
+          },
+          {
+            "id": "53311ac1-c2de-c2ab-e54c-6d0bd6641386",
+            "ancestors": [
+              "798702ce-b353-afa6-724d-2d16a22842b3"
+            ],
+            "description": "Adjusts the camera's projection and view matrices to match the specified viewport size, ensuring proper aspect ratio and viewport positioning.",
+            "params": [
+              {
+                "name": "width",
+                "type_name": "int",
+                "description": "2D viewport width.",
+                "complex_type": false
+              },
+              {
+                "name": "height",
+                "type_name": "int",
+                "description": "2D viewport size of the camera's view, which is used to calculate the appropriate projection and view matrices for rendering the 3D scene in the correct aspect ratio.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "@Override\n\tpublic void adjustToViewport(int width, int height) {\n\t\t((CameraStruct3D) this.values).aspect = (float) width / height;\n\t\tcalculateProjectionMatrix(values);\n\t\ttry {\n\t\t\tcalculateViewMatrix();\n\t\t} catch (NullPointerException e) {\n\t\t}\n\t\tGL11.glViewport(0, 0, width, height);\n\t}\n",
+              "description": ""
+            },
+            "name": "adjustToViewport",
+            "location": {
+              "start": 57,
+              "insert": 48,
+              "offset": "\t",
+              "indent": 1,
+              "comment": {
+                "start": 47,
+                "end": 56
+              }
+            },
+            "item_type": "method",
+            "length": 10,
+            "docLength": 9
+          },
+          {
+            "id": "c4e34452-c17c-708b-d54f-46f194d6fbf5",
+            "ancestors": [
+              "798702ce-b353-afa6-724d-2d16a22842b3"
+            ],
+            "description": "Defines a class for representing a 3D camera's perspective projection. It has parameters such as Field of View (fov), Aspect Ratio, Near Distance (zNear), and Far Distance (zFar). The class provides a method to initialize a matrix representing the perspective projection, which is used to transform 3D points from the object space to the image space.",
+            "name": "CameraStruct3D",
+            "location": {
+              "start": 78,
+              "insert": 68,
+              "offset": "\t",
+              "indent": 1,
+              "comment": {
+                "start": 67,
+                "end": 77
+              }
+            },
+            "item_type": "class",
+            "length": 36,
+            "docLength": 10
+          },
+          {
+            "id": "dee57ef8-611b-c3b8-5049-f3cea44b7b76",
+            "ancestors": [
+              "798702ce-b353-afa6-724d-2d16a22842b3",
+              "c4e34452-c17c-708b-d54f-46f194d6fbf5"
+            ],
+            "description": "Generates a 4x4 matrix representing a perspective projection, with fields for field of view (fov), aspect ratio, near and far distances.",
+            "params": [],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a Matrix4f object representing a perspective projection matrix.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "// Example 1: Create a new perspective projection matrix based on the FOV, aspect ratio, and zNear and zFar values of the Perspective class.\nPerspective perspective = new Perspective();\nperspective.fov = (float) Math.toRadians(60);\nperspective.aspect = 16 / 9;\nperspective.zNear = 0.1;\nperspective.zFar = 100;\nMatrix4f matrix = perspective.getAsMatrix4();\n",
+              "description": "\nIn this example, a new instance of the Perspective class is created and its FOV, aspect ratio, zNear, and zFar values are set. The getAsMatrix4 method is then called on the instance to retrieve a new perspective projection matrix based on these values. This matrix can be used for rendering 3D graphics.\n\n"
+            },
+            "name": "getAsMatrix4",
+            "location": {
+              "start": 109,
+              "insert": 89,
+              "offset": "\t",
+              "indent": 2,
+              "comment": {
+                "start": 88,
+                "end": 108
+              }
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": 20
+          },
+          {
+            "id": "81c4756c-a484-259b-f64e-9e090c2331da",
+            "ancestors": [
+              "798702ce-b353-afa6-724d-2d16a22842b3"
+            ],
+            "description": "Processes mouse and keyboard input to move an object based on its rotation and position. It rotates the object based on the mouse drag and applies linear motion based on keyboard inputs.",
+            "params": [
+              {
+                "name": "dt",
+                "type_name": "float",
+                "description": "time interval for which the code is executed, and it is used to calculate the movement of the object based on the keyboard inputs.",
+                "complex_type": false
+              },
+              {
+                "name": "speed",
+                "type_name": "float",
+                "description": "3D movement speed of the object being controlled by the program, and it is multiplied by the time elapsed (represented by `dt`) to determine the total distance traveled during the frame.",
+                "complex_type": false
+              },
+              {
+                "name": "sens",
+                "type_name": "float",
+                "description": "sensitivity of the character's movement, which determines how much the character will move in response to the user's input.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "public void update(float dt) {\n    float speed = 5.0f;\n    float sensitivity = 0.2f;\n    processInput(dt, speed, sensitivity);\n}\n",
+              "description": "\nIn this example, the update method is called with a delta time of `dt` and passes those values to the processInput method. The method then uses those values to determine how quickly the object rotates in response to mouse movements. The `speed` parameter determines how quickly the object moves forward or backward when the W key is pressed, while the `sensitivity` parameter controls how much the object rotates when the mouse moves."
+            },
+            "name": "processInput",
+            "location": {
+              "start": 129,
+              "insert": 115,
+              "offset": "\t",
+              "indent": 1,
+              "comment": {
+                "start": 114,
+                "end": 128
+              }
+            },
+            "item_type": "method",
+            "length": 23,
+            "docLength": 14
+          },
+          {
+            "id": "21967381-ce93-c2af-e840-1be0191d1014",
+            "ancestors": [
+              "798702ce-b353-afa6-724d-2d16a22842b3"
+            ],
+            "description": "Moves the object by a specified amount in a given direction, using the transform's position property to update the new position.",
+            "params": [
+              {
+                "name": "dir",
+                "type_name": "Vector3f",
+                "description": "3D direction to move the object in the specified amount of time, as measured by the `amt` parameter.",
+                "complex_type": false
+              },
+              {
+                "name": "amt",
+                "type_name": "float",
+                "description": "amount of movement along the specified direction, which is added to the current position of the object represented by the `getTransform()` method.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "public class Move {\n    public static void main(String[] args) {\n        Vector3f dir = new Vector3f(); // Initialize the direction vector to (0, 1, 0).\n        float amt = 1.0f; // Initialize the movement amount to 1.0f.\n        move(dir, amt); // Move in the \"dir\" direction by 1.0f units.\n    }\n}\n",
+              "description": ""
+            },
+            "name": "move",
+            "location": {
+              "start": 167,
+              "insert": 153,
+              "offset": "\t",
+              "indent": 1,
+              "comment": {
+                "start": 152,
+                "end": 166
+              }
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": 14
+          }
+        ]
+      }
+    }
+  }
+]
